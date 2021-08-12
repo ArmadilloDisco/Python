@@ -1,0 +1,36 @@
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+
+r = 1
+true_val = 3.141592653589793238
+X = [0]
+Y = [0]
+n_sides = int(input("Enter number of sides:"))
+
+def Est_Pi(x):
+        
+        n = x     
+
+        theta = 2*math.pi/n
+        psi = (math.pi - theta)/2
+        a = r*math.sin(theta)/math.sin(psi)
+        p = a*n
+        pi_est = p/(2*r)
+        print("Using Polygon of " + str(n) + " equal sides." )
+        print("The estimated value of Pi = " + str(pi_est))
+        print(str(100*pi_est/true_val) + "% accurate.")
+        for i in range(n+1):
+                if i == 0:
+                        X[i] = 0
+                        Y[i] = r
+                else:
+                        X.append(X[i-1]*math.cos(theta) - Y[i-1]*math.sin(theta))
+                        Y.append(Y[i-1]*math.cos(theta) + X[i-1]*math.sin(theta))
+        xpoints = np.array(X)
+        ypoints = np.array(Y)
+
+        plt.plot(xpoints, ypoints, marker = 'o')
+        plt.show()
+
+Est_Pi(n_sides)
